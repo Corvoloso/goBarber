@@ -60,7 +60,7 @@ const SignIn: React.FC = () => {
           <Button type="submit">Entrar</Button>
         </Form>
 
-        <a href="#">
+        <a href="/">
           <FiArrowLeft />
           Voltar para logon
         </a>
