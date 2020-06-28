@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/mobile';
+
+import * as Yup from 'yup';
 
 import Icon from 'react-native-vector-icons/Feather';
-
-import { useNavigation } from '@react-navigation/native';
 
 import {
   Image,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TextInput,
+  Alert,
 } from 'react-native';
+
+import { useAuth } from '../../hooks/auth';
+
+import api from '../../services/api';
+
+import getValidationErrors from '../../utils/getValidationErrors';
 import logoImg from '../../assets/logo.png';
 
 import Button from '../../components/Button';
@@ -24,8 +36,48 @@ import {
   CreateAccountButtonText,
 } from './styles';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+
   const navigation = useNavigation();
+
+  const { signIn, user } = useAuth();
+
+  const handleSignIn = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('Email obrigatório')
+            .email('Digite um email valido'),
+          password: Yup.string().required('Senha obrigatória'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        await signIn(data);
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+        }
+
+        console.log(err);
+      }
+    },
+    [signIn],
+  );
 
   return (
     <KeyboardAvoidingView
@@ -44,16 +96,33 @@ const SignIn: React.FC = () => {
 
           <Title>Faça seu logon</Title>
 
-          <Input name="e-mail" icon="mail" placeholder="E-mail" />
-          <Input name="password" icon="lock" placeholder="Senha" />
+          <Form ref={formRef} onSubmit={handleSignIn} style={{ width: '100%' }}>
+            <Input
+              name="email"
+              icon="mail"
+              placeholder="E-mail"
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() => passwordInputRef.current?.focus()}
+            />
 
-          <Button
-            onPress={() => {
-              console.log('teste');
-            }}
-          >
-            Entrar
-          </Button>
+            <Input
+              ref={passwordInputRef}
+              name="password"
+              icon="lock"
+              placeholder="Senha"
+              autoCorrect={false}
+              secureTextEntry
+              returnKeyType="send"
+              onSubmitEditing={() => formRef.current?.submitForm()}
+            />
+
+            <Button onPress={() => formRef.current?.submitForm()}>
+              Entrar
+            </Button>
+          </Form>
 
           <ForgotPassword
             onPress={() => {

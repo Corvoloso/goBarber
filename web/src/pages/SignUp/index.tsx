@@ -17,7 +17,8 @@ import logoImg from '../../assets/logo.svg';
 import { Container, Content, AnimationContainer, Background } from './styles';
 import { useToast } from '../../hooks/toast';
 
-interface SignInData {
+interface SignUpFormData {
+  name: string;
   email: string;
   password: string;
 }
@@ -29,7 +30,7 @@ const SignIn: React.FC = () => {
   const history = useHistory();
 
   const handleSubmit = useCallback(
-    async (data: SignInData) => {
+    async (data: SignUpFormData) => {
       try {
         formRef.current?.setErrors({});
 
