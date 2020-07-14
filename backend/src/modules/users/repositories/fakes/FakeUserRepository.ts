@@ -3,7 +3,7 @@ import { uuid } from 'uuidv4';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IUsersRepository from '@modules/users/repositories/IUserRepositories';
 
-import Users from '../../infra/typeorm/entities/Users';
+import Users from '../../infra/typeorm/entities/User';
 
 class UsersRepository implements IUsersRepository {
   private users: Users[] = [];

@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IUserRepositories from '@modules/users/repositories/IUserRepositories';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
-import Users from '@modules/users/infra/typeorm/entities/Users';
+import Users from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   name: string;

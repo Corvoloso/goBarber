@@ -1,4 +1,4 @@
-import Users from '@modules/users/infra/typeorm/entities/Users';
+import Users from '@modules/users/infra/typeorm/entities/User';
 
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
