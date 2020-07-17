@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import path from 'path';
 
 import AppError from '@shared/errors/AppError';
 
@@ -30,9 +31,30 @@ class SendForgotPasswordEmail {
       throw new AppError('User with this email does not exist', 400);
     };
 
-    await this.userTokens.generate(user.id);
+    const { token } = await this.userTokens.generate(user.id);
 
-    this.mailProvider.sendMail(email, 'Sua senha é: 123456');
+    const templatePath = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot_password.hbs'
+    )
+
+    await this.mailProvider.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[GoBarber] Esqueceu sua senha?',
+      templateData: {
+        file: templatePath,
+        variables: {
+          token,
+          name: user.name,
+          link: `http://localhost:3000/forgot_password?token=${token}`
+        }
+      }
+    });
   }
 }
 

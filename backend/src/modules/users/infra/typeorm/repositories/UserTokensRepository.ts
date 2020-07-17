@@ -5,10 +5,10 @@ import IUserTokensRepository from '@modules/users/repositories/IUserTokensReposi
 import UserTokens from '../entities/UserToken';
 
 class UserTokensRepository implements IUserTokensRepository {
-  private ormRepository: Repository<Users>;
+  private ormRepository: Repository<UserTokens>;
 
   constructor() {
-    this.ormRepository = getRepository(Users);
+    this.ormRepository = getRepository(UserTokens);
   }
 
   public async generate (user_id: string): Promise<UserTokens> {

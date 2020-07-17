@@ -1,17 +1,10 @@
 import IMailProvider from '../models/IMailProvider';
-
-interface IMails {
-  to: string;
-  body: string;
-};
+import ISendMailDTO from '../dtos/ISendMailDTO';
 
 export default class FakeMailProvider implements IMailProvider {
-  private mails: IMails[] = [];
+  private mails: ISendMailDTO[] = [];
 
-  public async sendMail(to: string, body: string): Promise<void> {
-    this.mails.push({
-      to,
-      body
-    })
+  public async sendMail(data: ISendMailDTO): Promise<void> {
+    this.mails.push(data);
   }
 }
