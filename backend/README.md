@@ -10,7 +10,7 @@
 
 **RNF - Requisitos Não Funcionais**
 
-- Utilizar Mailtrap para testar envios em email de desenvolvimento (Serviço de Fakemail)
+- Utilizar Ethereal para testar envios em email de desenvolvimento (Serviço de Fakemail)
 - Utilizar o Amazon SES para envios em produção;
 - O envio de email deve acontecer em segundo plano (background job);
 
@@ -24,8 +24,6 @@
 **RF**
 
 - O usuário deve poder atualizar seu nome, email e senha;
-
-**RNF**
 
 **RN**
 
