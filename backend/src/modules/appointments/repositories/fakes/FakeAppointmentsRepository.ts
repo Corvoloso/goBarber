@@ -1,8 +1,11 @@
 import { uuid } from 'uuidv4';
-import { isEqual } from 'date-fns';
+import { isEqual, getMonth, getYear, getDate } from 'date-fns';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/iAppointmentsRepository';
-import CreateAppointmentDTO from '@modules/appointments/dtos/CreateAppointmentDTO';
+
+import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO';
+import IFindAllInDayFromProviderDTO from '@modules/appointments/dtos/IFindAllInDayFromProviderDTO';
+import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 
 import Appointment from '../../infra/typeorm/entities/Appointment';
 
@@ -19,15 +22,50 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
   public async create({
     provider_id,
+    user_id,
     date,
-  }: CreateAppointmentDTO): Promise<Appointment> {
+  }: ICreateAppointmentDTO): Promise<Appointment> {
     const appointment = new Appointment();
 
-    Object.assign(appointment, { id: uuid(), provider_id, date })
+    Object.assign(appointment, { id: uuid(), provider_id, user_id, date })
 
     this.appointments.push(appointment);
 
     return appointment;
+  }
+
+  public async findAllInMonthFromProvider({
+    month,
+    year,
+    provider_id
+  }: IFindAllInMonthFromProviderDTO): Promise<Appointment[]> {
+    const findAppointment = this.appointments.filter(appointment =>{
+      return (
+        appointment.provider_id === provider_id &&
+        getMonth(appointment.date) + 1 === month &&
+        getYear(appointment.date) === year
+      );
+    });
+
+    return findAppointment;
+  }
+
+  public async findAllInDayFromProvider({
+    day,
+    month,
+    year,
+    provider_id
+  }: IFindAllInDayFromProviderDTO): Promise<Appointment[]> {
+    const findAppointment = this.appointments.filter(appointment =>{
+      return (
+        appointment.provider_id === provider_id &&
+        getDate(appointment.date) === day &&
+        getMonth(appointment.date) + 1 === month &&
+        getYear(appointment.date) === year
+      );
+    });
+
+    return findAppointment;
   }
 }
 

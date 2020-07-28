@@ -40,6 +40,7 @@
 - O usuário deve poder listar horários disponíveis em um dia específico de um prestador;
 
 **RNF**
+
 - Armazenar a listagem de prestadores deve ser armazenada em cache;
 
 **RN**
