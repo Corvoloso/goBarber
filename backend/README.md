@@ -1,6 +1,4 @@
-# Engenharia de Requisitos
-
-## Recuperação de Senha
+# Recuperação de Senha
 
 **RF - Requisitos Funcionais**
 
@@ -19,7 +17,7 @@
 - O link enviado por email para resetar senha, deve expirar em 2h;
 - O usuário precisa confirmar uma nova senha ao reseta-la;
 
-## Atualização do Perfil do Usuaŕio
+# Atualização do Perfil do Usuaŕio
 
 **RF**
 
@@ -31,7 +29,7 @@
 - Para atualizar de senha, o usuário deve informar a senha antiga;
 - Para atualizar sua senha, o usuário deve confirmar a nova senha;
 
-## Agendamento de Serviços
+# Agendamento de Serviços
 
 **RF**
 
@@ -51,7 +49,7 @@
 - O usuário não pode agendar em um horário que já passou;
 - O usuário não pode agendar serviços consigo mesmo;
 
-## Painel do Prestador
+# Painel do Prestador
 
 **RF**
 
