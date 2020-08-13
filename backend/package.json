@@ -13,6 +13,7 @@
   "dependencies": {
     "@types/nodemailer": "^6.4.0",
     "bcryptjs": "^2.4.3",
+    "celebrate": "^12.1.2",
     "cors": "^2.8.5",
     "csv-parse": "^4.10.1",
     "date-fns": "^2.13.0",
