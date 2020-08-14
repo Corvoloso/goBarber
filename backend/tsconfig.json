@@ -13,6 +13,7 @@
       "@shared/*": ["shared/*"]
     },
     "esModuleInterop": true,
+    "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
