@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
+import { classToClass } from 'class-transformer';
 
 export default class UsersController {
   public async create(request: Request, response: Response) {
@@ -12,10 +13,8 @@ export default class UsersController {
 
     const { user, token } = await authenticateUser.execute({ email, password });
 
-    delete user.password;
-
     return response.status(200).json({
-      user,
+      user: classToClass(user),
       token,
     });
   }

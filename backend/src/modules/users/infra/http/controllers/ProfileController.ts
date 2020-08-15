@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import UpdateProfileService from '@modules/users/services/UpdateProfileService';
 import ShowProfileService from '@modules/users/services/ShowProfileService';
 
-export default class UsersController {
+export default class ProfileController {
   public async show(request: Request, response: Response) {
     const user_id = request.user.id;
 
@@ -34,6 +35,6 @@ export default class UsersController {
 
     delete user.password;
 
-    return response.status(200).json(user);
+    return response.status(200).json(classToClass(user));
   }
 }

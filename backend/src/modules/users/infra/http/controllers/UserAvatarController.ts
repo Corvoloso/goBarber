@@ -3,8 +3,9 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
+import { classToClass } from 'class-transformer';
 
-export default class UsersController {
+export default class UserAvatarController {
   public async update(request: Request, response: Response) {
     const UpdateUserAvatar = container.resolve(UpdateUserAvatarService);
 
@@ -13,8 +14,6 @@ export default class UsersController {
       avatarFilename: request.file.filename,
     });
 
-    delete user.password;
-
-    return response.json(user);
+    return response.json(classToClass(user));
   }
 }
