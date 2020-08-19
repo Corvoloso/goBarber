@@ -7,6 +7,7 @@ import IUserRepositories from '@modules/users/repositories/IUserRepositories';
 
 import Users from '@modules/users/infra/typeorm/entities/User';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import { createPropertyAccessChain } from 'typescript';
 
 interface IRequest {
   email: string;
@@ -44,8 +45,8 @@ class AuthenticateUserService {
     const { secret, expiresIn } = authConfig.jwt;
 
     const token = sign({}, secret, {
-      subject: user.id,
-      expiresIn,
+        subject: user.id,
+        expiresIn,
     });
 
     return {
