@@ -5,6 +5,7 @@ import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 import { FiPower, FiClock } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 
 import {
@@ -40,25 +41,11 @@ interface Appointment {
 
 const Dashboard: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
-
   const [monthAvailability, setMonthAvailability] = useState<
     MonthAvailabilityItem[]
   >([]);
-
-  const { signOut, user } = useAuth();
-
-  const handleDateChange = useCallback((day: Date, modifier: DayModifiers) => {
-    if (modifier.available && !modifier.disabled) {
-      setSelectedDate(day);
-    }
-  }, []);
-
-  const handleMonthChange = useCallback((month: Date) => {
-    setCurrentMonth(month);
-  }, []);
 
   const disabledDays = useMemo(() => {
     return monthAvailability
@@ -100,6 +87,18 @@ const Dashboard: React.FC = () => {
       isAfter(parseISO(appointment.date), new Date()),
     );
   }, [appointments]);
+
+  const { signOut, user } = useAuth();
+
+  const handleDateChange = useCallback((day: Date, modifier: DayModifiers) => {
+    if (modifier.available && !modifier.disabled) {
+      setSelectedDate(day);
+    }
+  }, []);
+
+  const handleMonthChange = useCallback((month: Date) => {
+    setCurrentMonth(month);
+  }, []);
 
   useEffect(() => {
     api
@@ -146,7 +145,9 @@ const Dashboard: React.FC = () => {
 
             <div>
               <span>Bem vindo,</span>
-              <strong>{user.name}</strong>
+              <Link to="/profile">
+                <strong>{user.name}</strong>
+              </Link>
             </div>
           </Profile>
 
@@ -275,4 +276,5 @@ const Dashboard: React.FC = () => {
     </Container>
   );
 };
+
 export default Dashboard;

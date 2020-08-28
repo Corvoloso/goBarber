@@ -23,7 +23,7 @@ interface SignUpFormData {
   password: string;
 }
 
-const SignIn: React.FC = () => {
+const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
 
@@ -46,7 +46,7 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        await api.post('users', data);
+        await api.post('/users', data);
 
         addToast({
           type: 'success',
@@ -106,4 +106,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
