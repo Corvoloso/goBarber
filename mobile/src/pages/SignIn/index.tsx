@@ -72,8 +72,6 @@ const SignIn: React.FC = () => {
 
           formRef.current?.setErrors(errors);
         }
-
-        console.log(err);
       }
     },
     [signIn],
@@ -124,11 +122,7 @@ const SignIn: React.FC = () => {
             </Button>
           </Form>
 
-          <ForgotPassword
-            onPress={() => {
-              console.log('teste');
-            }}
-          >
+          <ForgotPassword onPress={() => {}}>
             <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
           </ForgotPassword>
         </Container>
