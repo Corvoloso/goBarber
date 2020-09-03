@@ -11,7 +11,11 @@ import HooksProvider from './hooks';
 const App: React.FC = () => {
   return (
     <NavigationContainer>
-      <StatusBar barStyle="light-content" backgroundColor="#28262e" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="#28262e"
+        translucent
+      />
 
       <HooksProvider>
         <Routes />
