@@ -53,13 +53,16 @@ const SignIn: React.FC = () => {
           const errors = getValidationErrors(err);
 
           formRef.current?.setErrors(errors);
+
+          return;
         }
 
         addToast({
           type: 'error',
           title: 'Erro no seu cadastro',
-          description: 'Ocorreu um erro ao tentar realizar o seu cadastro, tente novamente'
-        })
+          description:
+            'Ocorreu um erro ao tentar realizar o seu cadastro, tente novamente',
+        });
       }
     },
     [history, addToast, signIn],
