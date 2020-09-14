@@ -1,9 +1,13 @@
 import React from 'react';
 import { render, fireEvent, wait } from '@testing-library/react';
+import MockAdapter from 'axios-mock-adapter';
 import SignUp from '../../pages/SignUp';
+import api from '../../services/api';
 
 const mockedHistoryPush = jest.fn();
 const mockedAddToast = jest.fn();
+
+const apiMock = new MockAdapter(api);
 
 jest.mock('react-router-dom', () => {
   return {
@@ -11,16 +15,6 @@ jest.mock('react-router-dom', () => {
       push: mockedHistoryPush,
     }),
     Link: ({ children }: { children: React.ReactNode }) => children,
-  };
-});
-
-jest.mock('../../services/api', () => {
-  return {
-    api() {
-      return {
-        post: jest.fn(),
-      };
-    },
   };
 });
 
@@ -34,6 +28,14 @@ jest.mock('../../hooks/toast', () => {
 
 describe('SignUp page', () => {
   it('should be able to sign up', async () => {
+    const apiResponse = {
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
+    };
+
+    apiMock.onPost('/users').reply(200, apiResponse);
+
     const { getByPlaceholderText, getByText } = render(<SignUp />);
 
     const usernameField = getByPlaceholderText('Nome de usuário');

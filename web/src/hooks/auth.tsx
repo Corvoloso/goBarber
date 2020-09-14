@@ -3,6 +3,7 @@ import React, { createContext, useContext, useCallback, useState } from 'react';
 import api from '../services/api';
 
 interface User {
+  current;
   id: string;
   name: string;
   email: string;
@@ -91,10 +92,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 export const useAuth = (): AuthContextData => {
   const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
 
   return context;
 };
